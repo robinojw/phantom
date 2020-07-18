@@ -1,0 +1,122 @@
+html {
+  background-color: #f9f9f9;
+  font-family: "Menlo", sans-serif;
+}
+
+.page {
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 600px;
+  min-height: 635px;
+  background-color: white;
+  border-radius: 5px;
+  border: solid 1px #e3e3e3;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 21px;
+}
+
+.logo {
+  padding-top: 50px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40px;
+}
+
+.input {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.add {
+  width: 200px;
+  height: 30px;
+  border: solid 1px #e3e3e3;
+  border-radius: 2.5px;
+}
+
+.add-button {
+  color: white;
+  background-color: #4caf50;
+  height: 30px;
+  width: 80px;
+  border: 0 solid;
+  border-radius: 2.5px;
+  cursor: pointer;
+}
+
+.results li {
+  list-style-type: none;
+  border-radius: 2.5px;
+  border: solid 1px #e3e3e3;
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.results li h4 {
+  margin-top: 10px;
+}
+
+.results li:hover {
+  cursor: pointer;
+  color: blue;
+}
+
+.results li p {
+  color: lightgrey;
+  font-size: 14px;
+}
+
+ul {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 100px;
+}
+
+ul li {
+  display: inline;
+  list-style-type: none;
+  cursor: pointer;
+  color: black;
+  padding: 5px;
+}
+
+.results img {
+  fill: lightgrey;
+  float: right;
+  margin-left: 10px;
+  margin-top: -20px;
+}
+
+.cheers {
+  margin: 0 auto;
+  margin-top: 50px;
+  width: 600px;
+  min-height: 150px;
+  background-color: white;
+  border-radius: 5px;
+  border: solid 1px #e3e3e3;
+  padding: 20px;
+}
+
+.cheers h1 {
+  text-align: center;
+  font-size: 25px;
+  margin: 0 auto;
+  display: block;
+  padding: 20px;
+}
+.cheers a {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 20px;
+  display: block;
+}
