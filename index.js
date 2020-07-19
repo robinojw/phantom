@@ -4,6 +4,7 @@ let hash = new Map(); //map for efficient url storage
 var page = 0; //Number of pages
 var cheers = false; //page switch
 var currentPage = 0;
+var domain = "";
 
 function deserialize() {
   //Get 'cheers' from local storage
@@ -22,7 +23,7 @@ function deserialize() {
 
     //Create html elements for entries from local storage
     for (const [key, value] of hash.entries()) {
-      newURL(key, value);
+      newURL(key, domain);
     }
     pages(); //load pages
   }
@@ -38,7 +39,7 @@ function submitURL() {
 
   //check url is valid
   if (checkURL(inputURL) == true) {
-    hash.set(inputURL, hash.size); //Add to hashmap in memory
+    hash.set(inputURL, domain); //Add to hashmap in memory
     pages(); //update pagination
     localStorage.setItem(0, inputURL); //Add submission to memory
     localStorage.cheers = true; //Set 'cheers' boolean to true in local memory
@@ -61,6 +62,10 @@ function checkURL(input) {
     alert("Please enter a valid url i.e https://example.co.uk");
     return false;
   }
+
+  //Use regex to get domain name and set it to 'domain'
+  var re = /:\/\/(.[^/]+)/;
+  domain = input.match(re)[1];
 
   return true; //tests have been passed
 
@@ -161,7 +166,7 @@ function saveURL(key, value) {
   if (checkURL(val) == true) {
     target.firstChild.innerHTML = val;
     hash.delete(key);
-    hash.set(val, value); //update key of given url
+    hash.set(val, domain); //update key of given url
     localStorage.hash = JSON.stringify(Array.from(hash.entries()));
     //Remove input field and button
     target.removeChild(target.childNodes[3]);
@@ -189,6 +194,38 @@ function pages() {
   loadPage(page - 1); //load the current page
 }
 
+//-------Sorting & List Manipulation------------
+
+function alphaSort() {
+  hash = new Map(
+    [...hash.entries()].sort((a, b) => {
+      if (a[1] < b[1]) {
+        return -1;
+      }
+      if (a[1] > b[1]) {
+        return 1;
+      }
+      return 0;
+    })
+  );
+  localStorage.hash = JSON.stringify(Array.from(hash.entries()));
+  loadPage(currentPage);
+}
+
+function reverseList() {
+  hash = new Map([...hash.entries()].reverse()); //Reverse entries
+  localStorage.hash = JSON.stringify(Array.from(hash.entries()));
+  loadPage(currentPage);
+}
+
+function clearList() {
+  hash.clear();
+  localStorage.clear();
+  pages(); //update pages
+  loadPage(0);
+  document.getElementById("test").style.display = "block";
+}
+
 //-------Second Page---------
 
 //Set h1 value to the submitted url
@@ -202,11 +239,14 @@ function goBack() {
   localStorage.cheers = false;
 }
 
+//------Testing--------
+
 //Create test data with sample urls
 function testData() {
   var url = "http://robinw.co.uk/phantom/";
   for (let i = 0; i < 43; i++) {
-    hash.set(url + i.toString(), i);
+    checkURL(url);
+    hash.set(url + i.toString(), domain);
   }
   localStorage.hash = JSON.stringify(Array.from(hash.entries()));
   pages();
