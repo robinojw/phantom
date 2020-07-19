@@ -20,9 +20,6 @@ function deserialize() {
     //Parse hash and bool from local storage
     hash = new Map(JSON.parse(localStorage.hash));
 
-    //sort entries by value
-    hash = new Map([...hash.entries()].sort((b, a) => b[1] - a[1]));
-
     //Create html elements for entries from local storage
     for (const [key, value] of hash.entries()) {
       newURL(key, value);
@@ -82,7 +79,7 @@ function checkURL(input) {
 }
 
 function loadPage(index) {
-  currentPage = index;
+  currentPage = index; //Update the current page
   //Remove all elements from the results div
   while (results.firstChild) {
     results.removeChild(results.firstChild);
@@ -91,16 +88,16 @@ function loadPage(index) {
   if (index == -1) index = 0;
   var lower = index * 20;
   var upper = lower + 20;
+  let i = 0; //current index in the map
 
   //Add all elements in the current pages range
   for (const [key, value] of hash.entries()) {
-    if (value == lower) newURL(key, value);
-    if (value > lower && value < upper) {
+    if (i == lower) newURL(key, value);
+    if (i > lower && i < upper) {
       newURL(key, value);
     }
+    i++;
   }
-  //sort entries by value
-  hash = new Map([...hash.entries()].sort((b, a) => b[1] - a[1]));
 }
 
 //-------HTML Manipulation-------
@@ -136,17 +133,8 @@ function removeURL(url) {
   var target = document.getElementById(url);
   results.removeChild(target); //Remove URL form DOM
   //Update values as we use this for the index
-  for (const [key, value] of hash.entries()) {
-    if (url == key) {
-      var pos = hash.get(key);
-      hash.delete(url); //delete url
-    }
-    //update all values after the target index
-    if (value > pos) {
-      var newPos = value - 1;
-      hash.set(key, newPos);
-    }
-  }
+  hash.delete(url); //delete url
+
   //Update local storage
   localStorage.hash = JSON.stringify(Array.from(hash.entries()));
   loadPage(currentPage); //Reload current page
